@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/foodItems.dart';
+import '../../models/foodItems.dart';
 
 class FoodItemsScreen extends StatefulWidget {
   @override
@@ -15,6 +15,7 @@ class _FoodItemsScreenState extends State<FoodItemsScreen> {
       type: "def",
       calories: 140.0,
       lastConsumed: DateTime.now(),
+      mealTime: MealTime.BREAKFAST,
     ),
     FoodItems(
       id: 2,
@@ -26,6 +27,7 @@ class _FoodItemsScreenState extends State<FoodItemsScreen> {
           days: 1,
         ),
       ),
+      mealTime: MealTime.DINNER,
     ),
   ];
 
@@ -46,7 +48,7 @@ class _FoodItemsScreenState extends State<FoodItemsScreen> {
                 padding: EdgeInsets.all(6),
                 child: FittedBox(
                   child: Text(
-                    '${foodItems[index].calories} Kcal',
+                    '${foodItems[index].calories} Kcal${foodItems[index].mealTime},',
                     style: TextStyle(
                       color: Colors.yellow,
                     ),
