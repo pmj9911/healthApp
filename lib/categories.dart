@@ -67,14 +67,6 @@ class CategoriesState extends State<Categories> {
           borderRadius: BorderRadius.circular(15),
           child: containerAll('Excercise'),
         ),
-        InkWell(
-          onTap: () {
-            selectCatgorySteps(context);
-          },
-          splashColor: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(15),
-          child: containerAll('Steps'),
-        ),
       ],
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,

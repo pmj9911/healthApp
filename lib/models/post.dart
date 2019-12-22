@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<Post> fetchPost() async {
   final response =
-      await http.get('https://a9b9ca5a.ngrok.io/home');
+      await http.get('https://fcea7757.ngrok.io/home');
 
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.

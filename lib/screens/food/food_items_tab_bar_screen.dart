@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import './food_items_history_screen.dart';
 import './food_items_add_new.dart';
+import 'dart:io';
+
+import 'foodsLists.dart';
 
 class FoodItemsTabBar extends StatefulWidget {
-    static final routeName = '/food-items-tab';
+  static final routeName = '/food-items-tab';
 
   @override
   _FoodItemsTabBarState createState() => _FoodItemsTabBarState();
 }
 
 class _FoodItemsTabBarState extends State<FoodItemsTabBar> {
+  File _pickedImage;
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -39,8 +47,8 @@ class _FoodItemsTabBarState extends State<FoodItemsTabBar> {
         ),
         body: TabBarView(
           children: <Widget>[
-            FoodItemsScreen(),
-            FoodItemsAddNew(),
+            FoodsLists(),
+            FoodItemsAddNew(_selectImage),
           ],
         ),
       ),

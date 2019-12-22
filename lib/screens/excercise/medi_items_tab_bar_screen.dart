@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import './medi_items_history_screen.dart';
 import './excercise_items_add_new.dart';
+import 'excerciseCharts.dart';
 
 class MediItemsTabBar extends StatefulWidget {
-    static final routeName = '/medi-items-tab';
+  static final routeName = '/medi-items-tab';
 
   @override
   _MediItemsTabBarState createState() => _MediItemsTabBarState();
@@ -39,7 +39,7 @@ class _MediItemsTabBarState extends State<MediItemsTabBar> {
         ),
         body: TabBarView(
           children: <Widget>[
-            MediItemsScreen(),
+            ExcerciseCharts(),
             MediItemsAddNew(),
           ],
         ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-enum MealTime{
+enum MealTime {
   BREAKFAST,
   LUNCH,
   MIDTIME_SNACKS,
@@ -12,31 +12,27 @@ enum MealTime{
 }
 
 class FoodItems {
-  final int id;
-    final String name;
-    final String type;
-    final double calories;
-    final DateTime lastConsumed;
-    final MealTime mealTime;    
+  final int foodId;
+  final int profileId;
+  final String foodName;
+  final int calories;
+  final int bmi;
 
   FoodItems({
-    @required this.id,
-    @required this.name,
-    @required this.type,
+    @required this.foodId,
+    @required this.profileId,
+    @required this.foodName,
     @required this.calories,
-    @required this.lastConsumed,
-    @required this.mealTime,
+    @required this.bmi,
   });
-  Future<void> fetchPost() async {
-    try {
-      const url = 'https://a9b9ca5a.ngrok.io/home';
-      final response = await http.get(url);
-      print(response.body);
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      print(extractedData);
-      // notifyListeners();
-    } catch (error) {
-      throw (error);
-    }
+
+  factory FoodItems.fromJson(Map<String, dynamic> json) {
+    return FoodItems(
+      foodId: json['foodId'],
+      profileId: json['profileId'],
+      foodName: json['foodName'],
+      calories: json['calories'],
+      bmi: json['bmi'],
+    );
   }
 }

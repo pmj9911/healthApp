@@ -1,88 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../models/foodItems.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class FoodItemsScreen extends StatefulWidget {
   @override
   _FoodItemsScreenState createState() => _FoodItemsScreenState();
 }
 
 class _FoodItemsScreenState extends State<FoodItemsScreen> {
-  final List<FoodItems> foodItems = [
-    FoodItems(
-      id: 1,
-      name: "abc",
-      type: "def",
-      calories: 140.0,
-      lastConsumed: DateTime.now(),
-      mealTime: MealTime.BREAKFAST,
-    ),
-    FoodItems(
-      id: 2,
-      name: "qwe",
-      type: "rty",
-      calories: 240.0,
-      lastConsumed: DateTime.now().subtract(
-        Duration(
-          days: 1,
-        ),
-      ),
-      mealTime: MealTime.DINNER,
-    ),
-  ];
+  Future<FoodItems> foodItems;
+ List<FoodItems> newList=[];
+Future<FoodItems> fetchfood() async {
+  final response = await http.get('https://fcea7757.ngrok.io/food');
+  // print(response.toString());
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON.
+    print("response is 2001");
+    print('${jsonDecode(response.body).toList()}');
+    newList  = jsonDecode(response.body).toList();
+    return jsonDecode(response.body).toList();
+  } else {
+    // If that call was not successful, throw an error.
+    throw Exception(jsonDecode(response.body));
+  }
+}
+  @override
+  void initState() {
+    super.initState();
+    foodItems = fetchfood();
+  }
+
+  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values = snapshot.data;
+    print(values.toList());
+    return new ListView.builder(
+      itemCount: values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values[index]),
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        return Card(
-          elevation: 5,
-          margin: EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 5,
-          ),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              child: Padding(
-                padding: EdgeInsets.all(6),
-                child: FittedBox(
-                  child: Text(
-                    '${foodItems[index].calories} Kcal${foodItems[index].mealTime},',
-                    style: TextStyle(
-                      color: Colors.yellow,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            title: Text(
-              foodItems[index].name,
-              style: Theme.of(context).textTheme.title,
-            ),
-            subtitle: Text(
-              DateFormat.yMMMd().format(foodItems[index].lastConsumed),
-            ),
-            // trailing: MediaQuery.of(context).size.width > 400
-            //     ? FlatButton.icon(
-            //         label: Text('Delete'),
-            //         icon: Icon(Icons.delete),
-            //         textColor: Theme.of(context).errorColor,
-            //         onPressed: () {
-            //           deleteTransaction(foodItems[index].id);
-            //         },
-            //       )
-            //     : IconButton(
-            //         icon: Icon(Icons.delete),
-            //         color: Theme.of(context).errorColor,
-            //         onPressed: () {
-            //           deleteTransaction(foodItems[index].id);
-            //         },
-            //       ),
-          ),
-        );
-      },
-      itemCount: foodItems.length,
+    return Container(
+      child: FutureBuilder<FoodItems>(
+          future: foodItems,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return new Text('loading...');
+              default:
+                // if (snapshot.hasError)
+                  // return new Text('Error: ${snapshot.error}');
+                // else
+                  return createListView(context, snapshot);
+            }
+          }),
     );
   }
 }
