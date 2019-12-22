@@ -1,8 +1,24 @@
 # healthapp
+This is the official code repository for Code Reapers . This type of application was developed during CodeBreak 1.0, the on-campus event conducted by Computer Science and Information Technology department, MIT School of Engineering, Pune.
+Team Name
+Rishika Gupta,
+Parth Jardosh.
 
-A new Flutter project.
+Project Name : 
+Overview: 
 
-## Getting Started
+Explain about your project, the vision behind it and how it helps enhance lifestyle, etc.
+Technology used:
+
+Write about the technologies and tools used and how they were included and used in your application.
+Screenshots/Demo Video:
+https://drive.google.com/open?id=1QUXEXHrLkQrIZrnT7kfkdxIZdd2AlfNn : has the video for the app and the ML module
+
+
+Add some screens and a demo
+Usage
+
+Tell in steps how can we setup your application. Also mention all relevant requirements and links.
 1. clone the master branch into any folder.
 clone the django branch in the same folder.
 2.OPTIONAL:    ngrok would have to be setup in the system. Steps: https://ngrok.com/download in step 4 ,enter the command : ngrok http 8000
